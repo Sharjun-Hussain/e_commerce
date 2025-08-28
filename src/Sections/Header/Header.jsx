@@ -15,21 +15,21 @@ const categories = [
     { name: "Electronics", icon: "📱", hasDropdown: true },
     { name: "Beauty", icon: "💄", hasDropdown: true },
     { name: "Home Improvement", icon: "🔧", hasDropdown: true },
-    { name: "Sports, Toys & Luggage", icon: "⚽", hasDropdown: true },
+    // { name: "Sports, Toys & Luggage", icon: "⚽", hasDropdown: true },
 ]
 
 export function Header() {
     const { theme, setTheme } = useTheme()
-    const [mounted, setMounted] = useState(false)
+    // const [mounted, setMounted] = useState(false)
 
-    // Avoid hydration mismatch by only rendering after component mounts
-    useEffect(() => {
-        setMounted(true)
-    }, [])
+    // // Avoid hydration mismatch by only rendering after component mounts
+    // useEffect(() => {
+    //     setMounted(true)
+    // }, [])
 
-    if (!mounted) {
-        return null
-    }
+    // if (!mounted) {
+    //     return null
+    // }
 
     return (
         <header className="w-full sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm border-b dark:border-gray-800">
