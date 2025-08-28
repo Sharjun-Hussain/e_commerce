@@ -11,19 +11,11 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Brand Section */}
                     <div>
-                        <h3 className="text-xl font-bold mb-4">TechMart</h3>
+                        <h3 className="text-xl font-bold mb-4">MegaMart</h3>
                         <p className="text-gray-600 dark:text-gray-400">
                             Your trusted partner for premium electronics and computer equipment.
                         </p>
-                        <div className="mt-4 flex items-center">
-                            <span className="mr-2">Theme:</span>
-                            <button
-                                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                                className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded-md text-sm"
-                            >
-                                {theme === 'dark' ? 'Light' : 'Dark'} Mode
-                            </button>
-                        </div>
+
                     </div>
 
                     {/* Products Section */}
@@ -62,7 +54,7 @@ const Footer = () => {
 
                 {/* Copyright Section */}
                 <div className="border-t border-gray-300 dark:border-gray-700 mt-8 pt-8 text-center text-gray-600 dark:text-gray-400">
-                    <p>&copy; 2024 TechMart. All rights reserved.</p>
+                    <p>&copy; 2025 MegaMart. All rights reserved.</p>
                 </div>
             </div>
         </footer>
