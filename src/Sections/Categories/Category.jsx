@@ -110,8 +110,8 @@ export function ProductCategories() {
     }, [])
 
     return (
-        <section className="py-8 max-w-7xl  pl-4" aria-labelledby="categories-heading">
-            <div className="max-w-7xl mx-auto">
+        <section className="py-8  pl-4" aria-labelledby="categories-heading">
+            <div className="w-7xl mx-auto">
                 <div className="text-center mb-12">
                     <h2 id="categories-heading" className="text-3xl font-bold mb-4">Shop by Category</h2>
                     <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -123,7 +123,7 @@ export function ProductCategories() {
                     {/* Categories Container with hidden scrollbar */}
                     <div
                         ref={containerRef}
-                        className="flex gap-6 md:justify-start lg:justify-center overflow-x-auto pb-4  scrollbar-hide"
+                        className="flex gap-6 md:justify-start lg:justify-center  overflow-x-auto pb-4  scrollbar-hide"
                         role="region"
                         aria-label="Product categories"
                         tabIndex={0}

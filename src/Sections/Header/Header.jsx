@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, ShoppingCart, Menu, MapPin, Package, Tag, ChevronDown, User, Phone, Star, Heart, Truck, Shield, Award, Clock, Sun, Moon, X } from "lucide-react"
+import { Search, ShoppingCart, Menu, MapPin, Package, Tag, ChevronDown, User, Phone, Star, Heart, Truck, Shield, Award, Clock, Sun, Moon, X, MenuIcon, MenuSquareIcon, HeartMinusIcon, LayoutDashboard } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
@@ -156,11 +156,12 @@ export function Header() {
                                 </SheetContent>
                             </Sheet>
 
-                            <div className="flex items-center">
+                            <div className="flex items-center gap-3">
                                 <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1">
                                     <ShoppingCart className="h-6 w-6" />
                                     <span className="hidden sm:inline">MegaMart</span>
                                 </h1>
+                                <LayoutDashboard className="h6 w-6 " />
                             </div>
                         </div>
 
