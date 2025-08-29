@@ -6,7 +6,7 @@ const Footer = () => {
     const { theme, setTheme } = useTheme();
 
     return (
-        <footer className="w-full bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+        <footer className="w-full bg-background dark:bg-gray-800/20 text-gray-800 dark:text-gray-200 transition-colors duration-300">
             <div className="max-w-7xl mx-auto px-4 py-8">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Brand Section */}

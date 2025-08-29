@@ -1,16 +1,19 @@
 
+import { ProductCategories } from '@/Sections/Categories/Category'
 import Footer from '@/Sections/Footer/Footer'
 import { Header } from '@/Sections/Header/Header'
+
 import { HeroCarousel } from '@/Sections/Hero/Hero'
 import Head from 'next/head'
 import React, { Fragment } from 'react'
 
 const page = () => {
   return (
-    <Fragment>
+    <Fragment >
       <Header />
       <div className='max-w-7xl flex flex-col mx-auto'>
-        <HeroCarousel />
+        <section className='my-10'> <HeroCarousel /></section>
+        <ProductCategories />
       </div>
       <Footer />
     </Fragment>

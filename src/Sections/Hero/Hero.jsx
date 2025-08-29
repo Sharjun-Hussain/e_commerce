@@ -10,7 +10,7 @@ const slides = [
         title: "Latest Gaming Laptops",
         subtitle: "Up to 40% Off",
         description: "Experience ultimate gaming performance with RTX 4080 graphics",
-        image: "/gaming-laptop-with-rgb-keyboard-and-modern-design.png",
+        image: "/static/2.jpg",
         cta: "Shop Gaming Laptops",
     },
     {
@@ -18,7 +18,7 @@ const slides = [
         title: "Professional Workstations",
         subtitle: "For Creators & Developers",
         description: "Powerful workstations designed for demanding professional workflows",
-        image: "/professional-computer-workstation-setup-with-multi.png",
+        image: "/static/1.jpg",
         cta: "Explore Workstations",
     },
     {
@@ -26,7 +26,7 @@ const slides = [
         title: "Smart Home Electronics",
         subtitle: "Connected Living",
         description: "Transform your home with cutting-edge smart technology",
-        image: "/modern-smart-home-devices-and-electronics-setup.png",
+        image: "/static/3.jpg",
         cta: "Discover Smart Tech",
     },
 ]
