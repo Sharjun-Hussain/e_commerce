@@ -22,6 +22,17 @@ export function Header() {
     const { theme, setTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
+    const [isScrolled, setIsScrolled] = useState(false)
+
+    // Handle scroll to hide promotional bar
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50)
+        }
+
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
 
     // Avoid hydration mismatch by only rendering after component mounts
     useEffect(() => {
@@ -33,9 +44,9 @@ export function Header() {
     }
 
     return (
-        <header className="w-full sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm  md:border-b dark:border-gray-800">
-            {/* Promotional Top Bar */}
-            <div className=" hidden md:block  bg-blue-50 dark:bg-blue-900/20  md:border-b  md:border-blue-100 dark:md:border-blue-800/30">
+        <header className="w-full sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm">
+            {/* Promotional Top Bar - Hidden when scrolled */}
+            <div className={`hidden md:block bg-blue-50 dark:bg-blue-900/20 border-b border-blue-100 dark:border-blue-800/30 transition-all duration-300 ${isScrolled ? 'h-0 overflow-hidden opacity-0' : 'h-auto opacity-100'}`}>
                 <div className="max-w-7xl mx-auto px-4 py-2">
                     <div className="flex flex-col md:flex-row items-center justify-between text-sm text-blue-700 dark:text-blue-300">
                         <div className="flex items-center gap-1 mb-2 md:mb-0">
@@ -62,8 +73,8 @@ export function Header() {
                 </div>
             </div>
 
-            {/* Main Header */}
-            <div className="bg-white dark:bg-gray-900  md:border-b dark:border-gray-800">
+            {/* Main Header - Always sticky */}
+            <div className="bg-white dark:bg-gray-900 border-b dark:border-gray-800">
                 <div className="max-w-7xl mx-auto px-4 py-4">
                     <div className="flex items-center justify-between gap-4">
                         {/* Mobile Menu Button and Logo */}
@@ -75,7 +86,7 @@ export function Header() {
                                     </Button>
                                 </SheetTrigger>
                                 <SheetContent side="left" className="w-80 sm:w-96 p-0 bg-white dark:bg-gray-900">
-                                    <div className="flex items-center justify-between p-4  md:border-b dark:border-gray-800">
+                                    <div className="flex items-center justify-between p-4 border-b dark:border-gray-800">
                                         <h2 className="text-xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1">
                                             <ShoppingCart className="h-6 w-6" />
                                             MegaMart
@@ -174,11 +185,6 @@ export function Header() {
 
                         {/* Right Actions */}
                         <div className="flex items-center gap-2">
-                            {/* Mobile Search Button */}
-                            {/* <Button variant="ghost" size="icon" className="md:hidden">
-                                <Search className="h-5 w-5" />
-                            </Button> */}
-
                             {/* Theme Toggle Button */}
                             <Button
                                 variant="ghost"
@@ -238,7 +244,7 @@ export function Header() {
             </div>
 
             {/* Navigation Menu - Hidden on mobile */}
-            <div className="bg-white dark:bg-gray-900  md:border-b dark:border-gray-800 hidden md:block">
+            <div className="bg-white dark:bg-gray-900 border-b dark:border-gray-800 hidden md:block">
                 <div className="max-w-7xl mx-auto px-4">
                     <nav className="flex items-center gap-1 overflow-x-auto py-2 hide-scrollbar">
                         {categories.map((category) => (
