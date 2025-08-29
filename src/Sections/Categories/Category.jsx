@@ -123,7 +123,7 @@ export function ProductCategories() {
                     {/* Categories Container with hidden scrollbar */}
                     <div
                         ref={containerRef}
-                        className="flex gap-6 md:justify-center overflow-x-auto pb-4  scrollbar-hide"
+                        className="flex gap-6 md:justify-start lg:justify-center overflow-x-auto pb-4  scrollbar-hide"
                         role="region"
                         aria-label="Product categories"
                         tabIndex={0}

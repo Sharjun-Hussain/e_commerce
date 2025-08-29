@@ -74,7 +74,7 @@ export function Header() {
             </div>
 
             {/* Main Header - Always sticky */}
-            <div className="bg-white dark:bg-gray-900 border-b dark:border-gray-800">
+            <div className="bg-white dark:bg-gray-900  dark:border-gray-800">
                 <div className="max-w-7xl mx-auto px-4 py-4">
                     <div className="flex items-center justify-between gap-4">
                         {/* Mobile Menu Button and Logo */}
@@ -91,11 +91,7 @@ export function Header() {
                                             <ShoppingCart className="h-6 w-6" />
                                             MegaMart
                                         </h2>
-                                        <SheetClose asChild>
-                                            <Button variant="ghost" size="icon">
-                                                <X className="h-5 w-5" />
-                                            </Button>
-                                        </SheetClose>
+
                                     </div>
                                     <div className="p-4">
                                         <div className="mb-6">
@@ -200,6 +196,10 @@ export function Header() {
                             </Button>
 
                             <Button variant="ghost" size="icon" className="md:hidden">
+                                <Search className="h-5 w-5" />
+                            </Button>
+
+                            <Button variant="ghost" size="icon" className="md:hidden">
                                 <User className="h-5 w-5" />
                             </Button>
 
@@ -227,7 +227,7 @@ export function Header() {
                     </div>
 
                     {/* Mobile Search Bar - Appears below main header on mobile */}
-                    <div className="mt-3 md:hidden">
+                    {/* <div className="mt-3 md:hidden">
                         <div className="relative">
                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                             <Input
@@ -239,12 +239,12 @@ export function Header() {
                                 Search
                             </Button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
             {/* Navigation Menu - Hidden on mobile */}
-            <div className="bg-white dark:bg-gray-900 border-b dark:border-gray-800 hidden md:block">
+            {/* <div className="bg-white dark:bg-gray-900 border-b dark:border-gray-800 hidden md:block">
                 <div className="max-w-7xl mx-auto px-4">
                     <nav className="flex items-center gap-1 overflow-x-auto py-2 hide-scrollbar">
                         {categories.map((category) => (
@@ -288,7 +288,7 @@ export function Header() {
                         ))}
                     </nav>
                 </div>
-            </div>
+            </div> */}
 
             <style jsx>{`
                 .hide-scrollbar {
