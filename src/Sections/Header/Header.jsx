@@ -7,6 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
+import Link from "next/link"
 
 const categories = [
     { name: "Groceries", icon: "🛒", hasDropdown: true },
@@ -20,6 +21,7 @@ const categories = [
 
 export function Header() {
     const { theme, setTheme } = useTheme()
+
     const [mounted, setMounted] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
@@ -35,13 +37,18 @@ export function Header() {
     }, [])
 
     // Avoid hydration mismatch by only rendering after component mounts
-    useEffect(() => {
-        setMounted(true)
-    }, [])
+    // useEffect(() => {
+    //     setMounted(true)
+    // }, [])
 
-    if (!mounted) {
-        return null
+    // if (!mounted) {
+    //     return null
+    // }
+
+    const handleWishlistClick = () => {
+
     }
+
 
     return (
         <header className="w-full sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm">
@@ -117,10 +124,10 @@ export function Header() {
                                                 <Package className="h-5 w-5" />
                                                 Orders
                                             </Button>
-                                            <Button variant="ghost" className="w-full justify-start gap-2">
+                                            <Link href='/wishlist' className="w-full justify-start gap-2">
                                                 <Heart className="h-5 w-5" />
                                                 Wishlist
-                                            </Button>
+                                            </Link>
                                         </div>
                                         <div className="mt-6 pt-4 border-t dark:border-gray-800">
                                             <h3 className="font-semibold mb-2">Categories</h3>
@@ -214,7 +221,7 @@ export function Header() {
                                 <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">3</span>
                             </Button>
 
-                            <Button variant="ghost" className="hidden md:flex items-center gap-2 relative">
+                            <Button onClick={handleWishlistClick} variant="ghost" className="hidden md:flex items-center gap-2 relative">
                                 <Heart className="h-5 w-5" />
                                 <span className="hidden md:inline">Wishlist</span>
                                 <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">3</span>
