@@ -1,8 +1,9 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Monitor, Laptop, Smartphone, Headphones, Gamepad2, HardDrive, ChevronLeft, ChevronRight } from "lucide-react"
-import { useState, useRef, useEffect } from "react"
+import { Monitor, Laptop, Smartphone, Headphones, Gamepad2, HardDrive } from "lucide-react"
+import Image from "next/image"
+import { useRef, useEffect, useState } from "react"
 
 const categories = [
     {
@@ -50,60 +51,66 @@ const categories = [
 ]
 
 export function ProductCategories() {
-    const [showLeftArrow, setShowLeftArrow] = useState(false)
-    const [showRightArrow, setShowRightArrow] = useState(true)
-    const scrollContainer = useRef(null)
+    const containerRef = useRef(null)
+    const [isDragging, setIsDragging] = useState(false)
+    const [startX, setStartX] = useState(0)
+    const [scrollLeft, setScrollLeft] = useState(0)
 
-    // Check scroll position to show/hide navigation arrows
-    const checkScrollPosition = () => {
-        if (scrollContainer.current) {
-            const { scrollLeft, scrollWidth, clientWidth } = scrollContainer.current
-            setShowLeftArrow(scrollLeft > 0)
-            setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10)
-        }
+    // Handle mouse events for drag scrolling
+    const handleMouseDown = (e) => {
+        setIsDragging(true)
+        setStartX(e.pageX - containerRef.current.offsetLeft)
+        setScrollLeft(containerRef.current.scrollLeft)
     }
 
-    // Scroll functions with smooth behavior
-    const scrollLeft = () => {
-        if (scrollContainer.current) {
-            scrollContainer.current.scrollBy({ left: -300, behavior: 'smooth' })
-        }
+    const handleMouseLeave = () => {
+        setIsDragging(false)
     }
 
-    const scrollRight = () => {
-        if (scrollContainer.current) {
-            scrollContainer.current.scrollBy({ left: 300, behavior: 'smooth' })
-        }
+    const handleMouseUp = () => {
+        setIsDragging(false)
     }
 
-    // Add event listeners and check initial position
-    useEffect(() => {
-        const container = scrollContainer.current
-        if (container) {
-            container.addEventListener('scroll', checkScrollPosition)
-            checkScrollPosition() // Initial check
+    const handleMouseMove = (e) => {
+        if (!isDragging) return
+        e.preventDefault()
+        const x = e.pageX - containerRef.current.offsetLeft
+        const walk = (x - startX) * 2
+        containerRef.current.scrollLeft = scrollLeft - walk
+    }
 
-            // Cleanup
-            return () => container.removeEventListener('scroll', checkScrollPosition)
-        }
-    }, [])
+    // Handle touch events for mobile
+    const handleTouchStart = (e) => {
+        setIsDragging(true)
+        setStartX(e.touches[0].pageX - containerRef.current.offsetLeft)
+        setScrollLeft(containerRef.current.scrollLeft)
+    }
+
+    const handleTouchMove = (e) => {
+        if (!isDragging) return
+        const x = e.touches[0].pageX - containerRef.current.offsetLeft
+        const walk = (x - startX) * 2
+        containerRef.current.scrollLeft = scrollLeft - walk
+    }
 
     // Add keyboard navigation
     useEffect(() => {
         const handleKeyDown = (e) => {
+            if (!containerRef.current) return
+
             if (e.key === 'ArrowLeft') {
-                scrollLeft()
+                containerRef.current.scrollBy({ left: -300, behavior: 'smooth' })
             } else if (e.key === 'ArrowRight') {
-                scrollRight()
+                containerRef.current.scrollBy({ left: 300, behavior: 'smooth' })
             }
         }
 
-        window.addEventListener('keydown', handleKeyDown)
-        return () => window.removeEventListener('keydown', handleKeyDown)
+        containerRef.current?.addEventListener('keydown', handleKeyDown)
+        return () => containerRef.current?.removeEventListener('keydown', handleKeyDown)
     }, [])
 
     return (
-        <section className="py-16 px-4 md:px-6" aria-labelledby="categories-heading">
+        <section className="py-8 max-w-7xl  pl-4" aria-labelledby="categories-heading">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
                     <h2 id="categories-heading" className="text-3xl font-bold mb-4">Shop by Category</h2>
@@ -113,62 +120,37 @@ export function ProductCategories() {
                 </div>
 
                 <div className="relative">
-                    {/* Navigation Arrows */}
-                    {showLeftArrow && (
-                        <button
-                            onClick={scrollLeft}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm rounded-full p-2 shadow-lg border hover:bg-accent transition-colors hidden md:block"
-                            aria-label="Scroll left"
-                        >
-                            <ChevronLeft className="h-6 w-6" />
-                        </button>
-                    )}
-
-                    {showRightArrow && (
-                        <button
-                            onClick={scrollRight}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm rounded-full p-2 shadow-lg border hover:bg-accent transition-colors hidden md:block"
-                            aria-label="Scroll right"
-                        >
-                            <ChevronRight className="h-6 w-6" />
-                        </button>
-                    )}
-
-                    {/* Scroll Indicators for Mobile */}
-                    <div className="flex justify-center mb-4 md:hidden">
-                        <div className="flex space-x-1">
-                            {categories.map((_, index) => (
-                                <div
-                                    key={index}
-                                    className="w-2 h-2 rounded-full bg-muted"
-                                    aria-hidden="true"
-                                />
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Categories Container */}
+                    {/* Categories Container with hidden scrollbar */}
                     <div
-                        ref={scrollContainer}
-                        className="flex gap-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-muted-foreground/30 scrollbar-track-transparent snap-x snap-mandatory"
+                        ref={containerRef}
+                        className="flex gap-6 md:justify-center overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
                         role="region"
                         aria-label="Product categories"
                         tabIndex={0}
+                        onMouseDown={handleMouseDown}
+                        onMouseLeave={handleMouseLeave}
+                        onMouseUp={handleMouseUp}
+                        onMouseMove={handleMouseMove}
+                        onTouchStart={handleTouchStart}
+                        onTouchEnd={handleMouseUp}
+                        onTouchMove={handleTouchMove}
                     >
                         {categories.map((category) => {
                             const IconComponent = category.icon
                             return (
                                 <div
                                     key={category.title}
-                                    className="flex-none w-64 md:w-72 group cursor-pointer snap-start focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg"
+                                    className="flex-none w-46 md:w-45 group cursor-pointer snap-start  rounded-lg"
                                     tabIndex={0}
                                     role="article"
                                     aria-label={`Category: ${category.title}`}
                                 >
                                     <div className="relative mb-4">
-                                        <div className={`w-64 h-64 md:w-72 md:h-72 rounded-full overflow-hidden bg-gradient-to-br ${category.color} p-2 transition-all duration-300 group-hover:scale-105 group-focus:scale-105`}>
+                                        <div className={`w-46 h-46 md:w-45 md:h-45 rounded-full overflow-hidden bg-gradient-to-br ${category.color} p-2 transition-all duration-300 group-hover:scale-105 group-focus:scale-105`}>
                                             <div className="w-full h-full rounded-full overflow-hidden bg-white shadow-lg group-hover:shadow-xl transition-all duration-300">
-                                                <img
+                                                <Image
+                                                    width={100}
+                                                    height={100}
                                                     src={category.image || "/placeholder.svg"}
                                                     alt={category.title}
                                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -188,13 +170,13 @@ export function ProductCategories() {
                                             {category.title}
                                         </h3>
                                         <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{category.description}</p>
-                                        <Button
+                                        {/* <Button
                                             variant="outline"
                                             size="sm"
                                             className="w-full h-12 group-hover:bg-accent group-hover:text-accent-foreground group-hover:border-accent transition-all duration-300 bg-transparent group-focus:bg-accent group-focus:text-accent-foreground"
                                         >
                                             Browse {category.title}
-                                        </Button>
+                                        </Button> */}
                                     </div>
                                 </div>
                             )
@@ -202,12 +184,19 @@ export function ProductCategories() {
                     </div>
                 </div>
 
-                {/* View All Categories Button */}
-                <div className="text-center mt-12">
-                    <Button size="lg" className="px-8">
-                        View All Categories
-                    </Button>
-                </div>
+
+
+
+                {/* Custom CSS to hide scrollbar */}
+                <style jsx>{`
+                    .scrollbar-hide {
+                        -ms-overflow-style: none;
+                        scrollbar-width: none;
+                    }
+                    .scrollbar-hide::-webkit-scrollbar {
+                        display: none;
+                    }
+                `}</style>
             </div>
         </section>
     )
