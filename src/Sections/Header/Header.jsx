@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, ShoppingCart, Menu, MapPin, Package, Tag, ChevronDown, User, Phone, Star, Heart, Truck, Shield, Award, Clock, Sun, Moon, X, MenuIcon, MenuSquareIcon, HeartMinusIcon, LayoutDashboard } from "lucide-react"
+import { Search, ShoppingCart, Menu, MapPin, Package, Tag, ChevronDown, User, Phone, Star, Heart, Truck, Shield, Award, Clock, Sun, Moon, X, MenuIcon, MenuSquareIcon, HeartMinusIcon, LayoutDashboard, LayoutGrid } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
@@ -161,7 +161,7 @@ export function Header() {
                                     <ShoppingCart className="h-6 w-6" />
                                     <span className="hidden sm:inline">MegaMart</span>
                                 </h1>
-                                <LayoutDashboard className="h6 w-6 " />
+                                <Menu className="h-5 w-5 hidden md:block" />
                             </div>
                         </div>
 
