@@ -123,7 +123,7 @@ export function ProductCategories() {
                     {/* Categories Container with hidden scrollbar */}
                     <div
                         ref={containerRef}
-                        className="flex gap-6 md:justify-center overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
+                        className="flex gap-6 md:justify-center overflow-x-auto pb-4  scrollbar-hide"
                         role="region"
                         aria-label="Product categories"
                         tabIndex={0}
@@ -140,7 +140,7 @@ export function ProductCategories() {
                             return (
                                 <div
                                     key={category.title}
-                                    className="flex-none w-46 md:w-45 group cursor-pointer snap-start  rounded-lg"
+                                    className="flex-none w-46 md:w-45 group cursor-pointer  rounded-lg"
                                     tabIndex={0}
                                     role="article"
                                     aria-label={`Category: ${category.title}`}
@@ -166,7 +166,7 @@ export function ProductCategories() {
 
                                     {/* Text below image */}
                                     <div className="text-center px-2">
-                                        <h3 className="text-lg md:text-xl font-semibold mb-2 group-hover:text-accent group-focus:text-accent transition-colors">
+                                        <h3 className="text-lg md:text-xl font-semibold mb-2 group-hover:text-primary group-focus:text-primary transition-colors">
                                             {category.title}
                                         </h3>
                                         <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{category.description}</p>
