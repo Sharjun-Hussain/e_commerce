@@ -91,7 +91,7 @@ export function HeroCarousel() {
                             </p>
                             <Button
                                 size="lg"
-                                className="bg-primary rounded-full hover:bg-accent/90 text-primary-foreground animate-in slide-in-from-left-10 duration-700 delay-300 transition-all hover:scale-105"
+                                className="bg-primary rounded-full hover:bg-primary/90 text-primary-foreground animate-in slide-in-from-left-10 duration-300 transition-all "
                             >
                                 {slide.cta}
                             </Button>

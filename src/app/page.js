@@ -1,19 +1,21 @@
 
 import { ProductCategories } from '@/Sections/Categories/Category'
+import { ProductDealsSection } from '@/Sections/Deals/Deals'
 import Footer from '@/Sections/Footer/Footer'
 import { Header } from '@/Sections/Header/Header'
 
 import { HeroCarousel } from '@/Sections/Hero/Hero'
 import Head from 'next/head'
 import React, { Fragment } from 'react'
+import { headphoneDeals, laptopDeals } from './Data'
 
 const page = () => {
   return (
     <Fragment >
-      <Header />
       <div className=''>
         <section className=''> <HeroCarousel /></section>
         <ProductCategories />
+        <ProductDealsSection title="Laptops" products={laptopDeals} />
       </div>
       <Footer />
     </Fragment>
