@@ -61,7 +61,7 @@ export function HeroCarousel() {
     }
 
     return (
-        <div className="relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden rounded-lg bg-muted group">
+        <div className="relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden  bg-muted group">
             {slides.map((slide, index) => (
                 <div
                     key={slide.id}
@@ -80,7 +80,7 @@ export function HeroCarousel() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
                         <div className="absolute left-4 md:left-8 lg:left-12 top-1/2 -translate-y-1/2 text-white max-w-xs md:max-w-lg lg:max-w-xl">
-                            <p className="text-accent font-semibold mb-2 text-sm md:text-base animate-in slide-in-from-left-4 duration-700">
+                            <p className="text-secondary-foreground font-semibold mb-2 text-sm md:text-base animate-in slide-in-from-left-4 duration-700">
                                 {slide.subtitle}
                             </p>
                             <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 text-balance animate-in slide-in-from-left-6 duration-700 delay-100">
@@ -91,7 +91,7 @@ export function HeroCarousel() {
                             </p>
                             <Button
                                 size="lg"
-                                className="bg-accent hover:bg-accent/90 text-accent-foreground animate-in slide-in-from-left-10 duration-700 delay-300 transition-all hover:scale-105"
+                                className="bg-primary rounded-full hover:bg-accent/90 text-primary-foreground animate-in slide-in-from-left-10 duration-700 delay-300 transition-all hover:scale-105"
                             >
                                 {slide.cta}
                             </Button>
@@ -100,7 +100,7 @@ export function HeroCarousel() {
                 </div>
             ))}
 
-            <Button
+            {/* <Button
                 variant="ghost"
                 size="icon"
                 className="absolute -left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 hover:bg-white text-gray-800 hover:text-gray-900 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 opacity-0 group-hover:opacity-100 border border-white/20"
@@ -117,7 +117,7 @@ export function HeroCarousel() {
                 disabled={isTransitioning}
             >
                 <ChevronRight className="h-5 w-5" />
-            </Button>
+            </Button> */}
 
             <div className="absolute bottom-6 right-6 flex flex-col space-y-3">
                 {slides.map((_, index) => (

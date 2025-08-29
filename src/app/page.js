@@ -11,8 +11,8 @@ const page = () => {
   return (
     <Fragment >
       <Header />
-      <div className='max-w-7xl flex flex-col mx-auto'>
-        <section className='my-10'> <HeroCarousel /></section>
+      <div className=''>
+        <section className=''> <HeroCarousel /></section>
         <ProductCategories />
       </div>
       <Footer />
