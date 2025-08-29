@@ -111,7 +111,7 @@ export function ProductCategories() {
 
     return (
         <section className="py-8  pl-4" aria-labelledby="categories-heading">
-            <div className="w-7xl mx-auto">
+            <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
                     <h2 id="categories-heading" className="text-3xl font-bold mb-4">Shop by Category</h2>
                     <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
