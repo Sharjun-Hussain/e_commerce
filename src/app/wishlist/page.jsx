@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Heart, ShoppingCart, Trash2, ArrowLeft, Star } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useStore } from "@/Redux/Store"
+import { useStore } from "@/States/Store"
 
 export default function WishlistPage() {
     const { state, dispatch } = useStore()

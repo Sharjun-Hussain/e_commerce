@@ -8,7 +8,7 @@ import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft, Heart, Shield, Truck, Rota
 import Image from "next/image"
 import Link from "next/link"
 
-import { useStore } from "@/Redux/Store"
+import { useStore } from "@/States/Store"
 
 export default function CartPage() {
     const { state, dispatch } = useStore()

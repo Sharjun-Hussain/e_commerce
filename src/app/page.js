@@ -8,14 +8,17 @@ import { HeroCarousel } from '@/Sections/Hero/Hero'
 import Head from 'next/head'
 import React, { Fragment } from 'react'
 import { headphoneDeals, laptopDeals } from './Data'
+import FlashDealComponent from '@/Sections/FlashDeals/FlashDeals'
 
 const page = () => {
   return (
     <Fragment >
       <div className=''>
+        <Header />
         <section className=''> <HeroCarousel /></section>
         <ProductCategories />
         <ProductDealsSection title="Laptops" products={laptopDeals} />
+        <FlashDealComponent />
       </div>
       <Footer />
     </Fragment>

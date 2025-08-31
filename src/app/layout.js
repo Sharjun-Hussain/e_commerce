@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/Theme-Provider";
 import { Header } from "@/Sections/Header/Header";
-import { StoreProvider } from "@/Redux/Store";
+import { StoreProvider } from "@/States/Store";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,11 +29,11 @@ export default function RootLayout({ children }) {
 
           <ThemeProvider
             attribute="class"
-            defaultTheme="light"
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
-            <Header />
+
             {children}
           </ThemeProvider>
         </StoreProvider>
