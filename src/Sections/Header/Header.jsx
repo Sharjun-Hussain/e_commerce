@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/s
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 const categories = [
     { name: "Groceries", icon: "🛒", hasDropdown: true },
@@ -21,6 +22,7 @@ const categories = [
 
 export function Header() {
     const { theme, setTheme } = useTheme()
+    const router = useRouter()
 
     const [mounted, setMounted] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
@@ -227,7 +229,7 @@ export function Header() {
                                 <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">3</span>
                             </Button>
 
-                            <Button variant="ghost" size="icon" className="relative">
+                            <Button onClick={() => router.push('/cart')} variant="ghost" size="icon" className="relative">
                                 <ShoppingCart className="h-5 w-5" />
                                 <span className="absolute -top-1 -right-1 bg-blue-600 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">5</span>
                             </Button>

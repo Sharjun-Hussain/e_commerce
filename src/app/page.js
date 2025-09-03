@@ -19,6 +19,7 @@ const page = () => {
         <ProductCategories />
         <ProductDealsSection title="Laptops" products={laptopDeals} />
         <FlashDealComponent />
+        <ProductDealsSection title="Smart Phones" products={laptopDeals} />
       </div>
       <Footer />
     </Fragment>

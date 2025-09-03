@@ -93,3 +93,203 @@ export const headphoneDeals = [
         savings: 5991,
     },
 ]
+
+
+
+export const categories = [
+    'Electronics',
+    'Clothing',
+    'Home & Garden',
+    'Sports',
+    'Beauty',
+    'Books',
+    'Automotive',
+    'Health'
+];
+
+export const products = [
+    {
+        id: '1',
+        name: 'Premium Wireless Headphones',
+        price: 299.99,
+        originalPrice: 399.99,
+        image: 'https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=500',
+        category: 'Electronics',
+        brand: 'AudioTech',
+        rating: 4.8,
+        reviewCount: 2847,
+        description: 'Experience superior sound quality with our premium wireless headphones featuring noise cancellation.',
+        features: ['Noise Cancellation', '30-hour Battery', 'Quick Charge', 'Premium Materials'],
+        inStock: true,
+        isNew: true,
+        isFeatured: true,
+        tags: ['wireless', 'premium', 'noise-cancelling']
+    },
+    {
+        id: '2',
+        name: 'Smart Fitness Watch',
+        price: 249.99,
+        image: 'https://images.pexels.com/photos/393047/pexels-photo-393047.jpeg?auto=compress&cs=tinysrgb&w=500',
+        category: 'Electronics',
+        brand: 'FitTech',
+        rating: 4.6,
+        reviewCount: 1923,
+        description: 'Track your fitness goals with advanced health monitoring and smart notifications.',
+        features: ['Heart Rate Monitor', 'GPS Tracking', '7-day Battery', 'Waterproof'],
+        inStock: true,
+        isFeatured: true,
+        tags: ['fitness', 'smart', 'health']
+    },
+    {
+        id: '3',
+        name: 'Designer Cotton T-Shirt',
+        price: 39.99,
+        originalPrice: 59.99,
+        image: 'https://images.pexels.com/photos/1027130/pexels-photo-1027130.jpeg?auto=compress&cs=tinysrgb&w=500',
+        category: 'Clothing',
+        brand: 'StyleCo',
+        rating: 4.4,
+        reviewCount: 567,
+        description: 'Comfortable and stylish cotton t-shirt perfect for everyday wear.',
+        features: ['100% Cotton', 'Pre-shrunk', 'Machine Washable', 'Various Colors'],
+        inStock: true,
+        tags: ['cotton', 'casual', 'comfortable']
+    },
+    {
+        id: '4',
+        name: 'Professional Camera Lens',
+        price: 899.99,
+        image: 'https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=500',
+        category: 'Electronics',
+        brand: 'LensMaster',
+        rating: 4.9,
+        reviewCount: 432,
+        description: 'Professional-grade camera lens for stunning photography and videography.',
+        features: ['Ultra-wide Angle', 'Image Stabilization', 'Weather Sealed', 'Multi-coating'],
+        inStock: true,
+        isNew: true,
+        tags: ['photography', 'professional', 'lens']
+    },
+
+
+
+];
+
+
+const MOCK_PRODUCTS = [
+    {
+        id: '1',
+        currentPrice: 89999,
+        originalPrice: 119900,
+        discount: 25,
+        name: 'Nexus Pro Wireless Charger',
+        description: 'Premium 15W wireless charging pad with LED status indicator',
+        price: 79.99,
+        salePrice: 59.99,
+        category: 'Charging',
+        imageUrl: "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=500",
+        rating: 4.8,
+        reviewCount: 124,
+        isNew: true,
+        isInStock: true,
+        tags: ['wireless', 'fast-charging', 'premium']
+    },
+    {
+        id: '2',
+        currentPrice: 89999,
+        originalPrice: 119900,
+        discount: 25,
+        name: 'Elite Mechanical Keyboard',
+        description: 'RGB backlit mechanical keyboard with hot-swappable switches',
+        price: 149.99,
+        category: 'Keyboards',
+        imageUrl: "https://images.pexels.com/photos/3685530/pexels-photo-3685530.jpeg?auto=compress&cs=tinysrgb&w=500",
+        rating: 4.9,
+        reviewCount: 89,
+        isNew: false,
+        isInStock: true,
+        tags: ['mechanical', 'rgb', 'gaming']
+    },
+    {
+        id: '3',
+        currentPrice: 89999,
+        originalPrice: 119900,
+        discount: 25,
+        name: 'Precision Mouse Pad XL',
+        description: 'Extended gaming mouse pad with stitched edges',
+        price: 24.99,
+        category: 'Accessories',
+        imageUrl: "https://images.pexels.com/photos/1649771/pexels-photo-1649771.jpeg?auto=compress&cs=tinysrgb&w=500",
+        rating: 4.6,
+        reviewCount: 203,
+        isNew: false,
+        isInStock: true,
+        tags: ['gaming', 'extended', 'stitched']
+    },
+    {
+        id: '4',
+        currentPrice: 89999,
+        originalPrice: 119900,
+        discount: 25,
+        name: 'Nexus Monitor Stand Pro',
+        description: 'Adjustable monitor stand with built-in USB hub',
+        price: 89.99,
+        salePrice: 69.99,
+        category: 'Desk Setup',
+        imageUrl: "https://images.pexels.com/photos/586974/pexels-photo-586974.jpeg?auto=compress&cs=tinysrgb&w=500",
+        rating: 4.7,
+        reviewCount: 156,
+        isNew: true,
+        isInStock: false,
+        tags: ['adjustable', 'usb-hub', 'ergonomic']
+    },
+    {
+        id: '5',
+        currentPrice: 89999,
+        originalPrice: 119900,
+        discount: 25,
+        name: 'Cable Management Kit',
+        description: 'Complete cable organization solution for clean desk setup',
+        price: 19.99,
+        category: 'Desk Setup',
+        imageUrl: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=500",
+        rating: 4.4,
+        reviewCount: 78,
+        isNew: false,
+        isInStock: true,
+        tags: ['organization', 'clean', 'magnetic']
+    },
+    {
+        id: '6',
+        currentPrice: 89999,
+        originalPrice: 119900,
+        discount: 25,
+        name: 'Ambient LED Strip Kit',
+        description: 'Smart LED strips with app control and music sync',
+        price: 39.99,
+        category: 'Lighting',
+        imageUrl: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=500",
+        rating: 4.3,
+        reviewCount: 92,
+
+        isNew: false,
+        isInStock: true,
+        tags: ['smart', 'rgb', 'music-sync']
+    }
+];
+
+// Simulate API call with delay
+export async function getProducts() {
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 300));
+    return MOCK_PRODUCTS;
+}
+
+export const CATEGORIES = ['Charging', 'Keyboards', 'Accessories', 'Desk Setup', 'Lighting'];
+
+export const PRICE_RANGES = [
+    { label: 'Under $25', min: 0, max: 25 },
+    { label: '$25 - $50', min: 25, max: 50 },
+    { label: '$50 - $100', min: 50, max: 100 },
+    { label: '$100+', min: 100, max: Infinity }
+];
