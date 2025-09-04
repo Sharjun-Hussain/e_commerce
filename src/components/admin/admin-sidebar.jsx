@@ -22,8 +22,6 @@ import {
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/States/auth-context"
 
-
-
 const navItems = [
     {
         title: "Dashboard",
@@ -91,8 +89,6 @@ const navItems = [
     },
 ]
 
-
-
 export function AdminSidebar({ isOpen, onClose }) {
     const pathname = usePathname()
     const { user, logout, hasPermission } = useAuth()
@@ -112,12 +108,12 @@ export function AdminSidebar({ isOpen, onClose }) {
             {/* Sidebar */}
             <div
                 className={cn(
-                    "fixed left-0 top-0 z-50 h-full w-64 bg-background border-r border-gray-200 dark:border-gray-600 overflow-auto transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0",
+                    "fixed left-0 top-0 z-50 h-full w-64 bg-background border-r border-gray-200 dark:border-gray-600 overflow-auto transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 flex flex-col",
                     isOpen ? "translate-x-0" : "-translate-x-full"
                 )}
             >
                 {/* Header */}
-                <div className="flex items-center justify-between p-4 border-b dark:border-gray-600 border-gray-200 ">
+                <div className="flex items-center justify-between p-4 border-b dark:border-gray-600 border-gray-200">
                     <div className="flex items-center space-x-2">
                         <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                             <Package className="w-5 h-5 text-white" />
@@ -143,7 +139,7 @@ export function AdminSidebar({ isOpen, onClose }) {
                     </div>
                 </div>
 
-                {/* Navigation */}
+                {/* Navigation - This will take up remaining space */}
                 <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
                     {filteredNavItems.map((item) => (
                         <div key={item.title}>
@@ -160,22 +156,8 @@ export function AdminSidebar({ isOpen, onClose }) {
                                         <div className="flex items-center space-x-3">
                                             <item.icon className="w-4 h-4" />
                                             <span>{item.title}</span>
-
                                         </div>
                                         <span className="flex items-center gap-3">
-                                            {/* {item.badge && (
-                                                <div className="relative">
-                                                    <div className="flex items-center justify-center w-5 h-5 bg-primary rounded-full ml-auto">
-                                                        <span className="text-xs font-medium text-primary-foreground">
-                                                            {item.badge}
-                                                        </span>
-                                                    </div>
-                                                    <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2">
-                                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                                                    </span>
-                                                </div>
-                                            )} */}
                                             {item.badge && (
                                                 <div className="bg-primary/15 text-primary px-2 py-1 rounded-full ml-auto min-w-[20px]">
                                                     <span className="text-xs font-medium text-center">
@@ -241,16 +223,22 @@ export function AdminSidebar({ isOpen, onClose }) {
                     ))}
                 </nav>
 
-                {/* Logout */}
-                <div className="p-4 border-t dark:border-gray-600 border-gray-200">
-                    <Button
-                        variant="ghost"
-                        className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
-                        onClick={logout}
-                    >
-                        <LogOut className="w-4 h-4 mr-3" />
-                        Logout
-                    </Button>
+                {/* Logout - Fixed at the bottom */}
+                <div className="p-4 border-t dark:border-gray-600 border-gray-200 mt-auto">
+                    <div className="relative">
+                        <Button
+                            variant="default"
+                            className="w-full justify-center bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
+                            onClick={logout}
+                        >
+                            <LogOut className="w-4 h-4 mr-2" />
+                            <span className="font-semibold">Logout</span>
+                            <div className="absolute -right-2 -top-2">
+                                <div className="w-3 h-3 bg-white rounded-full animate-ping opacity-75"></div>
+                                <div className="w-3 h-3 bg-white rounded-full absolute top-0"></div>
+                            </div>
+                        </Button>
+                    </div>
                 </div>
             </div>
         </>

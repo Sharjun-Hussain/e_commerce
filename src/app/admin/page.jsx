@@ -60,8 +60,8 @@ export default function AdminDashboard() {
             <div className="space-y-6">
                 {/* Welcome Section */}
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">Welcome back, {user?.name}!</h1>
-                    <p className="text-gray-600 mt-1">Here's what's happening with your store today.</p>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200">Welcome back, {user?.name}!</h1>
+                    <p className="text-gray-600 dark:text-gray-300 mt-1">Here's what's happening with your store today.</p>
                 </div>
 
                 {/* Stats Grid */}
@@ -70,7 +70,7 @@ export default function AdminDashboard() {
                         <Card key={stat.title}>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
-                                <stat.icon className="h-4 w-4 text-muted-foreground" />
+                                <stat.icon className="h-4 w-4 text-primary" />
                             </CardHeader>
                             <CardContent>
                                 <div className="text-2xl font-bold">{stat.value}</div>
@@ -119,7 +119,7 @@ export default function AdminDashboard() {
                         <CardContent>
                             <div className="grid gap-3">
                                 {hasPermission("products.write") && (
-                                    <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                                    <div className="flex items-center justify-between p-3 border dark:border-gray-600 border-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
                                         <div className="flex items-center space-x-3">
                                             <Package className="h-5 w-5 text-primary" />
                                             <span className="text-sm font-medium">Add New Product</span>
@@ -128,7 +128,7 @@ export default function AdminDashboard() {
                                     </div>
                                 )}
                                 {hasPermission("orders.read") && (
-                                    <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                                    <div className="flex items-center justify-between p-3 border dark:border-gray-600 border-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
                                         <div className="flex items-center space-x-3">
                                             <ShoppingCart className="h-5 w-5 text-primary" />
                                             <span className="text-sm font-medium">View Pending Orders</span>
@@ -137,7 +137,7 @@ export default function AdminDashboard() {
                                     </div>
                                 )}
                                 {hasPermission("analytics.read") && (
-                                    <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                                    <div className="flex items-center justify-between p-3 border dark:border-gray-600 border-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
                                         <div className="flex items-center space-x-3">
                                             <BarChart3 className="h-5 w-5 text-primary" />
                                             <span className="text-sm font-medium">View Analytics</span>
@@ -145,7 +145,7 @@ export default function AdminDashboard() {
                                         <Badge variant="secondary">Reports</Badge>
                                     </div>
                                 )}
-                                <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <div className="flex items-center justify-between p-3 border dark:border-gray-600 border-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
                                     <div className="flex items-center space-x-3">
                                         <Eye className="h-5 w-5 text-primary" />
                                         <span className="text-sm font-medium">View Store</span>

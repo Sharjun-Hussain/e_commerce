@@ -145,7 +145,7 @@ export default function OrdersPage() {
                         <p className="text-gray-900 dark:text-gray-200 mt-1">Manage customer orders and fulfillment</p>
                     </div>
                     <div className="flex items-center space-x-2">
-                        <Button variant="outline" size="sm">
+                        <Button variant="default" size="sm">
                             <Download className="w-4 h-4 mr-2" />
                             Export
                         </Button>
@@ -158,7 +158,7 @@ export default function OrdersPage() {
                         <Card key={stat.title}>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
-                                <stat.icon className="h-4 w-4 text-muted-foreground" />
+                                <stat.icon className="h-4 w-4 text-primary" />
                             </CardHeader>
                             <CardContent>
                                 <div className="text-2xl font-bold">{stat.value}</div>
