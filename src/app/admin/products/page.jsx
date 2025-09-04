@@ -188,7 +188,7 @@ export default function ProductsPage() {
                 Export
             </Button>
             {hasPermission("products.write") && (
-                <Link href="/admin/products/add">
+                <Link href="/admin/products/new">
                     <Button>
                         <Plus className="w-4 h-4 mr-2" />
                         Add Product
