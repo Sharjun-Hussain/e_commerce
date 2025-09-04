@@ -160,15 +160,33 @@ export function AdminSidebar({ isOpen, onClose }) {
                                         <div className="flex items-center space-x-3">
                                             <item.icon className="w-4 h-4" />
                                             <span>{item.title}</span>
-                                            {item.badge && (
-                                                <Badge variant="secondary" className="ml-auto">
-                                                    {item.badge}
-                                                </Badge>
-                                            )}
+
                                         </div>
-                                        <ChevronDown
-                                            className={cn("w-4 h-4 transition-transform", expandedItems.includes(item.title) && "rotate-180")}
-                                        />
+                                        <span className="flex items-center gap-3">
+                                            {/* {item.badge && (
+                                                <div className="relative">
+                                                    <div className="flex items-center justify-center w-5 h-5 bg-primary rounded-full ml-auto">
+                                                        <span className="text-xs font-medium text-primary-foreground">
+                                                            {item.badge}
+                                                        </span>
+                                                    </div>
+                                                    <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2">
+                                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                                                    </span>
+                                                </div>
+                                            )} */}
+                                            {item.badge && (
+                                                <div className="bg-primary/15 text-primary px-2 py-1 rounded-full ml-auto min-w-[20px]">
+                                                    <span className="text-xs font-medium text-center">
+                                                        {item.badge}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            <ChevronDown
+                                                className={cn("w-4 h-4 transition-transform", expandedItems.includes(item.title) && "rotate-180")}
+                                            />
+                                        </span>
                                     </Button>
                                     {expandedItems.includes(item.title) && (
                                         <div className="ml-4 mt-1 space-y-1">
@@ -185,7 +203,7 @@ export function AdminSidebar({ isOpen, onClose }) {
                                                             )}
                                                         >
                                                             <div className="flex items-center space-x-2 w-full">
-                                                                <span className="text-xs">{child.title}</span>
+                                                                <span className="text-[13px]">{child.title}</span>
                                                                 {child.badge && (
                                                                     <Badge variant="secondary" className="ml-auto text-xs">
                                                                         {child.badge}
