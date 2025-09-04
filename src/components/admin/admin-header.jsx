@@ -11,13 +11,16 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Bell, Search, Menu, Settings, User, LogOut } from "lucide-react"
+import { Bell, Search, Menu, Settings, User, LogOut, Sun, Moon } from "lucide-react"
 import { useAuth } from "@/States/auth-context"
+import { useTheme } from "next-themes"
+
 
 
 
 export function AdminHeader({ onMenuClick }) {
     const { user, logout } = useAuth()
+    const { theme, setTheme } = useTheme()
 
     return (
         <header className="bg-white border-b border-gray-200 px-4 py-3">
@@ -38,6 +41,18 @@ export function AdminHeader({ onMenuClick }) {
 
                 {/* Right side */}
                 <div className="flex items-center space-x-4">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                        className="hidden md:flex"
+                    >
+                        {theme === 'dark' ? (
+                            <Sun className="h-5 w-5" />
+                        ) : (
+                            <Moon className="h-5 w-5" />
+                        )}
+                    </Button>
                     {/* Notifications */}
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
