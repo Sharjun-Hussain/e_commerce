@@ -242,7 +242,7 @@ export function AdminSidebar({ isOpen, onClose }) {
                 </nav>
 
                 {/* Logout */}
-                <div className="p-4 border-t border-gray-200">
+                <div className="p-4 border-t dark:border-gray-600 border-gray-200">
                     <Button
                         variant="ghost"
                         className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
