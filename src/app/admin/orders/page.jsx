@@ -4,23 +4,9 @@ import { useState } from "react"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import {
-    Search,
-    MoreHorizontal,
-    Eye,
     Package,
     Truck,
     CheckCircle,
@@ -28,30 +14,19 @@ import {
     Clock,
     DollarSign,
     Download,
+    Eye,
 } from "lucide-react"
 import { AdminLayout } from "@/components/admin/admin-layout"
+import DataTable from "@/components/admin/DataTable"
 import { useAuth } from "@/States/auth-context"
 import { useOrders } from "@/States/order-store"
+import { useRouter } from "next/navigation"
+
 
 export default function OrdersPage() {
-    const { orders, updateOrderStatus } = useOrders()
+    const { orders, updateOrderStatus, bulkUpdateOrderStatus } = useOrders()
     const { hasPermission } = useAuth()
-    const [searchTerm, setSearchTerm] = useState("")
-    const [statusFilter, setStatusFilter] = useState("all")
-    const [paymentFilter, setPaymentFilter] = useState("all")
-
-    // Filter orders based on search and filters
-    const filteredOrders = orders.filter((order) => {
-        const matchesSearch =
-            order.orderNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            order.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            order.customerEmail.toLowerCase().includes(searchTerm.toLowerCase())
-
-        const matchesStatus = statusFilter === "all" || order.status === statusFilter
-        const matchesPayment = paymentFilter === "all" || order.paymentStatus === paymentFilter
-
-        return matchesSearch && matchesStatus && matchesPayment
-    })
+    const router = useRouter();
 
     const getStatusBadge = (status) => {
         switch (status) {
@@ -112,6 +87,123 @@ export default function OrdersPage() {
         }
     }
 
+    const handleBulkAction = (action, orderIds) => {
+        if (action === "updateStatus") {
+            // You could open a modal here to select the status
+            bulkUpdateOrderStatus(orderIds, "processing")
+        } else if (action === "export") {
+            // Handle export logic
+            console.log("Exporting orders:", orderIds)
+        } else if (action === "cancel") {
+            bulkUpdateOrderStatus(orderIds, "cancelled")
+        }
+    }
+
+    const handleRowClick = (order) => {
+        // Navigate to order details
+        router.push(`/admin/orders/${order.id}`)
+
+    }
+
+    const ordersColumns = [
+        {
+            accessor: "orderNumber",
+            header: "Order",
+            sortable: true,
+            cell: (order) => (
+                <div>
+                    <p className="font-medium">{order.orderNumber}</p>
+                    {order.trackingNumber && (
+                        <p className="text-xs text-gray-500">Tracking: {order.trackingNumber}</p>
+                    )}
+                </div>
+            )
+        },
+        {
+            accessor: "customerName",
+            header: "Customer",
+            sortable: true,
+            cell: (order) => (
+                <div className="flex items-center space-x-3">
+                    <Avatar className="w-8 h-8">
+                        <AvatarFallback>{order.customerName.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                        <p className="font-medium">{order.customerName}</p>
+                        <p className="text-sm text-gray-500">{order.customerEmail}</p>
+                    </div>
+                </div>
+            )
+        },
+        {
+            accessor: "items",
+            header: "Items",
+            cell: (order) => (
+                <div>
+                    <p className="text-sm">
+                        {order.items.length} item{order.items.length !== 1 ? "s" : ""}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                        {order.items
+                            .slice(0, 2)
+                            .map((item) => item.productName)
+                            .join(", ")}
+                        {order.items.length > 2 && ` +${order.items.length - 2} more`}
+                    </p>
+                </div>
+            )
+        },
+        {
+            accessor: "total",
+            header: "Total",
+            sortable: true,
+            cell: (order) => <span className="font-medium">${order.total.toFixed(2)}</span>
+        },
+        {
+            accessor: "status",
+            header: "Status",
+            sortable: true,
+            cell: (order) => getStatusBadge(order.status),
+            filterOptions: [
+                { value: "pending", label: "Pending" },
+                { value: "processing", label: "Processing" },
+                { value: "shipped", label: "Shipped" },
+                { value: "delivered", label: "Delivered" },
+                { value: "cancelled", label: "Cancelled" },
+                { value: "refunded", label: "Refunded" },
+            ]
+        },
+        {
+            accessor: "paymentStatus",
+            header: "Payment",
+            sortable: true,
+            cell: (order) => getPaymentBadge(order.paymentStatus),
+            filterOptions: [
+                { value: "paid", label: "Paid" },
+                { value: "pending", label: "Pending" },
+                { value: "failed", label: "Failed" },
+                { value: "refunded", label: "Refunded" },
+            ]
+        },
+        {
+            accessor: "createdAt",
+            header: "Date",
+            sortable: true,
+            cell: (order) => (
+                <div>
+                    <p className="text-sm">{new Date(order.createdAt).toLocaleDateString()}</p>
+                    <p className="text-xs text-gray-500">{new Date(order.createdAt).toLocaleTimeString()}</p>
+                </div>
+            )
+        },
+    ]
+
+    const bulkActions = [
+        { value: "updateStatus", label: "Update Status" },
+        { value: "export", label: "Export Selected" },
+        { value: "cancel", label: "Cancel Orders", destructive: true },
+    ]
+
     const stats = [
         {
             title: "Total Orders",
@@ -141,7 +233,7 @@ export default function OrdersPage() {
                 {/* Header */}
                 <div className="flex justify-between items-center">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200 ">Orders</h1>
+                        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200">Orders</h1>
                         <p className="text-gray-900 dark:text-gray-200 mt-1">Manage customer orders and fulfillment</p>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -174,170 +266,49 @@ export default function OrdersPage() {
                         <CardDescription>View and manage all customer orders</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                            <div className="relative flex-1">
-                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                                <Input
-                                    placeholder="Search orders, customers..."
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="pl-10"
-                                />
-                            </div>
-                            <Select value={statusFilter} onValueChange={setStatusFilter}>
-                                <SelectTrigger className="w-40">
-                                    <SelectValue placeholder="Order Status" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="all">All Status</SelectItem>
-                                    <SelectItem value="pending">Pending</SelectItem>
-                                    <SelectItem value="processing">Processing</SelectItem>
-                                    <SelectItem value="shipped">Shipped</SelectItem>
-                                    <SelectItem value="delivered">Delivered</SelectItem>
-                                    <SelectItem value="cancelled">Cancelled</SelectItem>
-                                </SelectContent>
-                            </Select>
-                            <Select value={paymentFilter} onValueChange={setPaymentFilter}>
-                                <SelectTrigger className="w-40">
-                                    <SelectValue placeholder="Payment Status" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="all">All Payments</SelectItem>
-                                    <SelectItem value="paid">Paid</SelectItem>
-                                    <SelectItem value="pending">Pending</SelectItem>
-                                    <SelectItem value="failed">Failed</SelectItem>
-                                    <SelectItem value="refunded">Refunded</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-
-                        <div className="rounded-md ">
-                            <Table className="">
-                                <TableHeader >
-                                    <TableRow className="">
-                                        <TableHead>Order</TableHead>
-                                        <TableHead>Customer</TableHead>
-                                        <TableHead>Items</TableHead>
-                                        <TableHead>Total</TableHead>
-                                        <TableHead>Status</TableHead>
-                                        <TableHead>Payment</TableHead>
-                                        <TableHead>Date</TableHead>
-                                        <TableHead className="text-right">Actions</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {filteredOrders.map((order) => (
-                                        <TableRow className="border-gray-300 dark:border-gray-600" key={order.id}>
-                                            <TableCell>
-                                                <div>
-                                                    <p className="font-medium">{order.orderNumber}</p>
-                                                    {order.trackingNumber && (
-                                                        <p className="text-xs text-gray-500">Tracking: {order.trackingNumber}</p>
-                                                    )}
-                                                </div>
-                                            </TableCell>
-                                            <TableCell>
-                                                <div className="flex items-center space-x-3">
-                                                    <Avatar className="w-8 h-8">
-                                                        <AvatarFallback>{order.customerName.charAt(0)}</AvatarFallback>
-                                                    </Avatar>
-                                                    <div>
-                                                        <p className="font-medium">{order.customerName}</p>
-                                                        <p className="text-sm text-gray-500">{order.customerEmail}</p>
-                                                    </div>
-                                                </div>
-                                            </TableCell>
-                                            <TableCell>
-                                                <div>
-                                                    <p className="text-sm">
-                                                        {order.items.length} item{order.items.length !== 1 ? "s" : ""}
-                                                    </p>
-                                                    <p className="text-xs text-gray-500">
-                                                        {order.items
-                                                            .slice(0, 2)
-                                                            .map((item) => item.productName)
-                                                            .join(", ")}
-                                                        {order.items.length > 2 && ` +${order.items.length - 2} more`}
-                                                    </p>
-                                                </div>
-                                            </TableCell>
-                                            <TableCell>
-                                                <span className="font-medium">${order.total.toFixed(2)}</span>
-                                            </TableCell>
-                                            <TableCell>{getStatusBadge(order.status)}</TableCell>
-                                            <TableCell>{getPaymentBadge(order.paymentStatus)}</TableCell>
-                                            <TableCell>
-                                                <div>
-                                                    <p className="text-sm">{new Date(order.createdAt).toLocaleDateString()}</p>
-                                                    <p className="text-xs text-gray-500">{new Date(order.createdAt).toLocaleTimeString()}</p>
-                                                </div>
-                                            </TableCell>
-                                            <TableCell className="text-right">
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger asChild>
-                                                        <Button variant="ghost" className="h-8 w-8 p-0">
-                                                            <MoreHorizontal className="h-4 w-4" />
-                                                        </Button>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end">
-                                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                        <DropdownMenuItem asChild>
-                                                            <Link href={`/admin/orders/${order.id}`}>
-                                                                <Eye className="mr-2 h-4 w-4" />
-                                                                View Details
-                                                            </Link>
-                                                        </DropdownMenuItem>
-                                                        {hasPermission("orders.write") && (
-                                                            <>
-                                                                <DropdownMenuSeparator />
-                                                                <DropdownMenuItem
-                                                                    onClick={() => updateOrderStatus(order.id, "processing")}
-                                                                    disabled={order.status === "processing"}
-                                                                >
-                                                                    Mark as Processing
-                                                                </DropdownMenuItem>
-                                                                <DropdownMenuItem
-                                                                    onClick={() => updateOrderStatus(order.id, "shipped")}
-                                                                    disabled={order.status === "shipped" || order.status === "delivered"}
-                                                                >
-                                                                    Mark as Shipped
-                                                                </DropdownMenuItem>
-                                                                <DropdownMenuItem
-                                                                    onClick={() => updateOrderStatus(order.id, "delivered")}
-                                                                    disabled={order.status === "delivered"}
-                                                                >
-                                                                    Mark as Delivered
-                                                                </DropdownMenuItem>
-                                                                <DropdownMenuSeparator />
-                                                                <DropdownMenuItem
-                                                                    onClick={() => updateOrderStatus(order.id, "cancelled")}
-                                                                    disabled={order.status === "delivered" || order.status === "cancelled"}
-                                                                    className="text-red-600"
-                                                                >
-                                                                    Cancel Order
-                                                                </DropdownMenuItem>
-                                                            </>
-                                                        )}
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </div>
-
-                        {filteredOrders.length === 0 && (
-                            <div className="text-center py-8">
-                                <Package className="mx-auto h-12 w-12 text-gray-400" />
-                                <h3 className="mt-2 text-sm font-medium text-gray-900">No orders found</h3>
-                                <p className="mt-1 text-sm text-gray-500">
-                                    {searchTerm || statusFilter !== "all" || paymentFilter !== "all"
-                                        ? "Try adjusting your search or filters."
-                                        : "Orders will appear here when customers make purchases."}
-                                </p>
-                            </div>
-                        )}
+                        <DataTable
+                            data={orders}
+                            columns={ordersColumns}
+                            searchableColumns={[
+                                { accessor: "orderNumber" },
+                                { accessor: "customerName" },
+                                { accessor: "customerEmail" }
+                            ]}
+                            filterableColumns={[
+                                {
+                                    accessor: "status", header: "Status", filterOptions: [
+                                        { value: "pending", label: "Pending" },
+                                        { value: "processing", label: "Processing" },
+                                        { value: "shipped", label: "Shipped" },
+                                        { value: "delivered", label: "Delivered" },
+                                        { value: "cancelled", label: "Cancelled" },
+                                        { value: "refunded", label: "Refunded" },
+                                    ]
+                                },
+                                {
+                                    accessor: "paymentStatus", header: "Payment", filterOptions: [
+                                        { value: "paid", label: "Paid" },
+                                        { value: "pending", label: "Pending" },
+                                        { value: "failed", label: "Failed" },
+                                        { value: "refunded", label: "Refunded" },
+                                    ]
+                                }
+                            ]}
+                            bulkActions={hasPermission("orders.write") ? bulkActions : []}
+                            onBulkAction={handleBulkAction}
+                            onRowClick={handleRowClick}
+                            defaultSortField="createdAt"
+                            defaultSortDirection="desc"
+                            emptyState={
+                                <div className="text-center py-8">
+                                    <Package className="mx-auto h-12 w-12 text-gray-400" />
+                                    <h3 className="mt-2 text-sm font-medium text-gray-900">No orders found</h3>
+                                    <p className="mt-1 text-sm text-gray-500">
+                                        Try adjusting your search or filters.
+                                    </p>
+                                </div>
+                            }
+                        />
                     </CardContent>
                 </Card>
             </div>

@@ -1,9 +1,8 @@
 "use client"
-
 import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
-
 import { cn } from "@/lib/utils"
+import { motion, AnimatePresence } from "framer-motion"
 
 function Tabs({
   className,
@@ -21,14 +20,59 @@ function TabsList({
   className,
   ...props
 }) {
+  // State to track underline position
+  const [underlineStyle, setUnderlineStyle] = React.useState({ left: 0, width: 0 })
+  const ref = React.useRef(null)
+
+  // On active tab change, update the underline position
+  // We listen for active tab change by tracking the current value of TabsPrimitive.Root context by a custom event
+  React.useEffect(() => {
+    function updateUnderline() {
+      if (!ref.current) return;
+      const activeTrigger = ref.current.querySelector('[data-state="active"]')
+      if (activeTrigger) {
+        setUnderlineStyle({
+          left: activeTrigger.offsetLeft,
+          width: activeTrigger.offsetWidth,
+        })
+      }
+    }
+    updateUnderline()
+
+    // In case active tab changes later
+    // We listen for mutations inside this container for state changes
+    const observer = new MutationObserver(updateUnderline)
+    if (ref.current)
+      observer.observe(ref.current, { attributes: true, subtree: true, attributeFilter: ['data-state'] })
+
+    window.addEventListener('resize', updateUnderline)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', updateUnderline)
+    }
+  }, [])
+
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
+      ref={ref}
       className={cn(
-        "bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[3px]",
+        "relative inline-flex h-9 w-fit items-center justify-center rounded-lg p-[3px]",
         className
       )}
-      {...props} />
+      {...props} >
+      {props.children}
+      {/* Animated underline */}
+      <motion.div
+        layout
+        initial={false}
+        animate={{ left: underlineStyle.left, width: underlineStyle.width }}
+        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+        className="absolute bottom-0 h-[2px] bg-blue-500 rounded"
+        style={{ position: 'absolute' }}
+      />
+    </TabsPrimitive.List>
   );
 }
 
@@ -40,7 +84,7 @@ function TabsTrigger({
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-        "data-[state=active]:bg-background dark:data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30 text-foreground dark:text-muted-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring text-foreground dark:text-muted-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-50",
         className
       )}
       {...props} />
