@@ -23,7 +23,7 @@ export function AdminHeader({ onMenuClick }) {
     const { theme, setTheme } = useTheme()
 
     return (
-        <header className="bg-white border-b border-gray-200 px-4 py-3">
+        <header className="bg-background border-b border-gray-200 dark:border-gray-600 px-4 py-3">
             <div className="flex items-center justify-between">
                 {/* Left side */}
                 <div className="flex items-center space-x-4">
