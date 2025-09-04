@@ -47,7 +47,7 @@ export default function OrderDetailPage() {
             <AdminLayout>
                 <div className="text-center py-8">
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Order Not Found</h1>
-                    <p className="text-gray-600 dark:text-gray-200 dark:text-gray-50 mt-2">The order you're looking for doesn't exist.</p>
+                    <p className="text-gray-600 dark:text-gray-200  mt-2">The order you're looking for doesn't exist.</p>
                     <Link href="/admin/orders">
                         <Button className="mt-4">
                             <ArrowLeft className="w-4 h-4 mr-2" />
