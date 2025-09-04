@@ -92,7 +92,7 @@ export default function AdminDashboard() {
                     {/* Recent Activity Card */}
                     <Card className="w-full">
                         <CardHeader>
-                            <CardTitle className="text-lg md:text-xl">Recent Activity</CardTitle>
+                            <CardTitle className="text-lg   md:text-xl">Recent Activity</CardTitle>
                             <CardDescription className="text-sm md:text-base">Latest updates from your store</CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -101,7 +101,7 @@ export default function AdminDashboard() {
                                     <div key={index} className="flex items-start space-x-3">
                                         <div className="mt-1.5 w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="text-sm font-medium text-gray-900 truncate">{activity.action}</p>
+                                            <p className="text-sm font-medium dark:text-gray-200 truncate">{activity.action}</p>
                                             <p className="text-xs text-gray-500 truncate">{activity.details}</p>
                                         </div>
                                         <div className="text-xs text-gray-400 whitespace-nowrap flex-shrink-0">{activity.time}</div>
