@@ -210,7 +210,7 @@ export function AdminSidebar({ isOpen, onClose }) {
                 </nav>
 
                 {/* Logout - Fixed at the bottom */}
-                <div className="p-4 border-t dark:border-gray-600 border-gray-200 mt-auto">
+                <div className="p-4  mt-auto">
                     <div className="relative">
                         <Button
                             variant="default"
@@ -219,10 +219,10 @@ export function AdminSidebar({ isOpen, onClose }) {
                         >
                             <LogOut className="w-4 h-4 mr-2" />
                             <span className="font-semibold">Logout</span>
-                            <div className="absolute -right-2 -top-2">
+                            {/* <div className="absolute -right-2 -top-2">
                                 <div className="w-3 h-3 bg-white rounded-full animate-ping opacity-75"></div>
                                 <div className="w-3 h-3 bg-white rounded-full absolute top-0"></div>
-                            </div>
+                            </div> */}
                         </Button>
                     </div>
                 </div>

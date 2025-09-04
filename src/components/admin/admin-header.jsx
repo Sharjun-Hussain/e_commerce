@@ -69,19 +69,19 @@ export function AdminHeader({ onMenuClick }) {
                             <DropdownMenuItem>
                                 <div className="flex flex-col space-y-1">
                                     <p className="text-sm font-medium">New order received</p>
-                                    <p className="text-xs text-gray-500">Order #12345 from John Doe</p>
+                                    <p className="text-xs ">Order #12345 from John Doe</p>
                                 </div>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <div className="flex flex-col space-y-1">
                                     <p className="text-sm font-medium">Low stock alert</p>
-                                    <p className="text-xs text-gray-500">MacBook Pro M3 - Only 2 left</p>
+                                    <p className="text-xs ">MacBook Pro M3 - Only 2 left</p>
                                 </div>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <div className="flex flex-col space-y-1">
                                     <p className="text-sm font-medium">Payment received</p>
-                                    <p className="text-xs text-gray-500">$2,499.00 from Order #12344</p>
+                                    <p className="text-xs ">Rs.2,499.00 from Order #12344</p>
                                 </div>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
