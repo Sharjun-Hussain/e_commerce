@@ -125,20 +125,6 @@ export function AdminSidebar({ isOpen, onClose }) {
                     </Button>
                 </div>
 
-                {/* User info */}
-                <div className="p-4 border-b dark:border-gray-600 border-gray-200">
-                    <div className="flex items-center space-x-3">
-                        <Avatar className="w-10 h-10">
-                            <AvatarImage src={user?.avatar || "/placeholder.svg"} alt={user?.name} />
-                            <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{user?.name}</p>
-                            <p className="text-xs text-gray-500 dark:text-gray-200 capitalize">{user?.role}</p>
-                        </div>
-                    </div>
-                </div>
-
                 {/* Navigation - This will take up remaining space */}
                 <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
                     {filteredNavItems.map((item) => (
