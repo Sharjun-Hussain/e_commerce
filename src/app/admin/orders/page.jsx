@@ -1,8 +1,5 @@
 "use client"
 
-import { useState } from "react"
-import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -16,17 +13,16 @@ import {
     Download,
     Eye,
 } from "lucide-react"
-import { AdminLayout } from "@/components/admin/admin-layout"
-import DataTable from "@/components/admin/DataTable"
 import { useAuth } from "@/States/auth-context"
 import { useOrders } from "@/States/order-store"
 import { useRouter } from "next/navigation"
+import ReusableListingPage from "@/components/admin/ReusableListingPage"
 
 
 export default function OrdersPage() {
     const { orders, updateOrderStatus, bulkUpdateOrderStatus } = useOrders()
     const { hasPermission } = useAuth()
-    const router = useRouter();
+    const router = useRouter()
 
     const getStatusBadge = (status) => {
         switch (status) {
@@ -89,10 +85,8 @@ export default function OrdersPage() {
 
     const handleBulkAction = (action, orderIds) => {
         if (action === "updateStatus") {
-            // You could open a modal here to select the status
             bulkUpdateOrderStatus(orderIds, "processing")
         } else if (action === "export") {
-            // Handle export logic
             console.log("Exporting orders:", orderIds)
         } else if (action === "cancel") {
             bulkUpdateOrderStatus(orderIds, "cancelled")
@@ -100,9 +94,7 @@ export default function OrdersPage() {
     }
 
     const handleRowClick = (order) => {
-        // Navigate to order details
         router.push(`/admin/orders/${order.id}`)
-
     }
 
     const ordersColumns = [
@@ -227,91 +219,52 @@ export default function OrdersPage() {
         },
     ]
 
+    const headerRightContent = (
+        <div className="flex items-center space-x-2">
+            <Button variant="default" size="sm">
+                <Download className="w-4 h-4 mr-2" />
+                Export
+            </Button>
+        </div>
+    )
+
     return (
-        <AdminLayout>
-            <div className="space-y-6">
-                {/* Header */}
-                <div className="flex justify-between items-center">
-                    <div>
-                        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200">Orders</h1>
-                        <p className="text-gray-900 dark:text-gray-200 mt-1">Manage customer orders and fulfillment</p>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <Button variant="default" size="sm">
-                            <Download className="w-4 h-4 mr-2" />
-                            Export
-                        </Button>
-                    </div>
-                </div>
-
-                {/* Stats */}
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    {stats.map((stat) => (
-                        <Card key={stat.title}>
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
-                                <stat.icon className="h-4 w-4 text-primary" />
-                            </CardHeader>
-                            <CardContent>
-                                <div className="text-2xl font-bold">{stat.value}</div>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </div>
-
-                {/* Orders Table */}
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Order Management</CardTitle>
-                        <CardDescription>View and manage all customer orders</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <DataTable
-                            data={orders}
-                            columns={ordersColumns}
-                            searchableColumns={[
-                                { accessor: "orderNumber" },
-                                { accessor: "customerName" },
-                                { accessor: "customerEmail" }
-                            ]}
-                            filterableColumns={[
-                                {
-                                    accessor: "status", header: "Status", filterOptions: [
-                                        { value: "pending", label: "Pending" },
-                                        { value: "processing", label: "Processing" },
-                                        { value: "shipped", label: "Shipped" },
-                                        { value: "delivered", label: "Delivered" },
-                                        { value: "cancelled", label: "Cancelled" },
-                                        { value: "refunded", label: "Refunded" },
-                                    ]
-                                },
-                                {
-                                    accessor: "paymentStatus", header: "Payment", filterOptions: [
-                                        { value: "paid", label: "Paid" },
-                                        { value: "pending", label: "Pending" },
-                                        { value: "failed", label: "Failed" },
-                                        { value: "refunded", label: "Refunded" },
-                                    ]
-                                }
-                            ]}
-                            bulkActions={hasPermission("orders.write") ? bulkActions : []}
-                            onBulkAction={handleBulkAction}
-                            onRowClick={handleRowClick}
-                            defaultSortField="createdAt"
-                            defaultSortDirection="desc"
-                            emptyState={
-                                <div className="text-center py-8">
-                                    <Package className="mx-auto h-12 w-12 text-gray-400" />
-                                    <h3 className="mt-2 text-sm font-medium text-gray-900">No orders found</h3>
-                                    <p className="mt-1 text-sm text-gray-500">
-                                        Try adjusting your search or filters.
-                                    </p>
-                                </div>
-                            }
-                        />
-                    </CardContent>
-                </Card>
-            </div>
-        </AdminLayout>
+        <ReusableListingPage
+            title="Orders"
+            description="Manage customer orders and fulfillment"
+            data={orders}
+            columns={ordersColumns}
+            stats={stats}
+            bulkActions={bulkActions}
+            searchableColumns={[
+                { accessor: "orderNumber" },
+                { accessor: "customerName" },
+                { accessor: "customerEmail" }
+            ]}
+            filterableColumns={[
+                {
+                    accessor: "status", header: "Status", filterOptions: [
+                        { value: "pending", label: "Pending" },
+                        { value: "processing", label: "Processing" },
+                        { value: "shipped", label: "Shipped" },
+                        { value: "delivered", label: "Delivered" },
+                        { value: "cancelled", label: "Cancelled" },
+                        { value: "refunded", label: "Refunded" },
+                    ]
+                },
+                {
+                    accessor: "paymentStatus", header: "Payment", filterOptions: [
+                        { value: "paid", label: "Paid" },
+                        { value: "pending", label: "Pending" },
+                        { value: "failed", label: "Failed" },
+                        { value: "refunded", label: "Refunded" },
+                    ]
+                }
+            ]}
+            onBulkAction={handleBulkAction}
+            onRowClick={handleRowClick}
+            headerRightContent={headerRightContent}
+            requireWritePermission={true}
+        />
     )
 }
