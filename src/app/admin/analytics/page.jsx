@@ -102,8 +102,8 @@ export default function AnalyticsPage() {
                 {/* Header */}
                 <div className="flex justify-between items-center">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900">Analytics Dashboard</h1>
-                        <p className="text-gray-600 mt-1">Track your store performance and insights</p>
+                        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200">Analytics Dashboard</h1>
+                        <p className="text-gray-600 dark:text-gray-50 mt-1">Track your store performance and insights</p>
                     </div>
                     <div className="flex items-center space-x-2">
                         <Select defaultValue="30days">
