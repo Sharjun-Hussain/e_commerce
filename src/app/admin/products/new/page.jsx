@@ -526,7 +526,7 @@ export default function AddProductPage() {
                     </div>
                     <div className="flex space-x-2">
                         <Button
-                            variant={viewMode === "preview" ? "default" : "outline"}
+                            variant={viewMode === "preview" ? "default" : "bordered"}
                             onClick={toggleViewMode}
                         >
                             {viewMode === "edit" ? (
