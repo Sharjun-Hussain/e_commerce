@@ -11,6 +11,7 @@ import { headphoneDeals, laptopDeals } from './Data'
 import FlashDealComponent from '@/Sections/FlashDeals/FlashDeals'
 import BrandsSection from '@/Sections/Brands/BrandsInfinity'
 import BrandShowcaseEnhanced from '@/Sections/Brands/BrandsInfinity'
+import NewArrivalsSection from '@/Sections/NewArrivals/NewArrival'
 
 const page = () => {
   return (
@@ -23,6 +24,7 @@ const page = () => {
         <FlashDealComponent />
         <ProductDealsSection title="Smart Phones" products={laptopDeals} />
         <BrandShowcaseEnhanced />
+        <NewArrivalsSection />
       </div>
       <Footer />
     </Fragment>

@@ -9,15 +9,107 @@ import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
 const categories = [
-    { name: "Groceries", icon: "🛒", hasDropdown: true },
-    { name: "Premium Fruits", icon: "🍎", hasDropdown: true },
-    { name: "Home & Kitchen", icon: "🏠", hasDropdown: true },
-    { name: "Fashion", icon: "👕", hasDropdown: true },
-    { name: "Electronics", icon: "📱", hasDropdown: true },
-    { name: "Beauty", icon: "💄", hasDropdown: true },
-    { name: "Home Improvement", icon: "🔧", hasDropdown: true },
+    {
+        name: "Groceries",
+        icon: "🛒",
+        hasDropdown: true,
+        subcategories: [
+            "Fruits & Vegetables",
+            "Dairy & Eggs",
+            "Bakery",
+            "Beverages",
+            "Snacks",
+            "Frozen Foods"
+        ],
+        image: "/api/placeholder/300/200?text=Groceries"
+    },
+    {
+        name: "Premium Fruits",
+        icon: "🍎",
+        hasDropdown: true,
+        subcategories: [
+            "Exotic Fruits",
+            "Organic Fruits",
+            "Seasonal Fruits",
+            "Fruit Baskets",
+            "Tropical Fruits",
+            "Berries"
+        ],
+        image: "/api/placeholder/300/200?text=Premium+Fruits"
+    },
+    {
+        name: "Home & Kitchen",
+        icon: "🏠",
+        hasDropdown: true,
+        subcategories: [
+            "Cookware",
+            "Small Appliances",
+            "Storage & Organization",
+            "Dining & Serving",
+            "Home Decor",
+            "Cleaning Supplies"
+        ],
+        image: "/api/placeholder/300/200?text=Home+Kitchen"
+    },
+    {
+        name: "Fashion",
+        icon: "👕",
+        hasDropdown: true,
+        subcategories: [
+            "Men's Fashion",
+            "Women's Fashion",
+            "Kids' Fashion",
+            "Accessories",
+            "Footwear",
+            "Sportswear"
+        ],
+        image: "/api/placeholder/300/200?text=Fashion"
+    },
+    {
+        name: "Electronics",
+        icon: "📱",
+        hasDropdown: true,
+        subcategories: [
+            "Mobile Phones",
+            "Laptops & Computers",
+            "Audio & Headphones",
+            "Cameras",
+            "Wearables",
+            "Accessories"
+        ],
+        image: "/api/placeholder/300/200?text=Electronics"
+    },
+    {
+        name: "Beauty",
+        icon: "💄",
+        hasDropdown: true,
+        subcategories: [
+            "Skincare",
+            "Makeup",
+            "Hair Care",
+            "Fragrances",
+            "Personal Care",
+            "Men's Grooming"
+        ],
+        image: "/api/placeholder/300/200?text=Beauty"
+    },
+    {
+        name: "Home Improvement",
+        icon: "🔧",
+        hasDropdown: true,
+        subcategories: [
+            "Tools",
+            "Lighting",
+            "Hardware",
+            "Paint & Supplies",
+            "Garden & Outdoor",
+            "Plumbing"
+        ],
+        image: "/api/placeholder/300/200?text=Home+Improvement"
+    },
 ]
 
 export function Header() {
@@ -27,6 +119,9 @@ export function Header() {
     const [mounted, setMounted] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
+    const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false)
+    const [hoveredCategory, setHoveredCategory] = useState(null)
+    const [isClosing, setIsClosing] = useState(false)
 
     // Handle scroll to hide promotional bar
     useEffect(() => {
@@ -38,18 +133,46 @@ export function Header() {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
-    // Avoid hydration mismatch by only rendering after component mounts
-    // useEffect(() => {
-    //     setMounted(true)
-    // }, [])
-
-    // if (!mounted) {
-    //     return null
-    // }
-
     const handleWishlistClick = () => {
-
+        // Wishlist click handler
     }
+
+    const toggleMegaMenu = () => {
+        if (isMegaMenuOpen) {
+            // Start closing animation
+            setIsClosing(true)
+            setTimeout(() => {
+                setIsMegaMenuOpen(false)
+                setIsClosing(false)
+            }, 300)
+        } else {
+            setIsMegaMenuOpen(true)
+            setIsClosing(false)
+        }
+    }
+
+    const closeMegaMenu = () => {
+        // Start closing animation
+        setIsClosing(true)
+        setTimeout(() => {
+            setIsMegaMenuOpen(false)
+            setIsClosing(false)
+        }, 300)
+    }
+
+    // Close mega menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (isMegaMenuOpen && !event.target.closest('.mega-menu-container')) {
+                closeMegaMenu()
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [isMegaMenuOpen])
 
 
     return (
@@ -87,7 +210,7 @@ export function Header() {
                 <div className="max-w-7xl mx-auto px-4 py-4">
                     <div className="flex items-center justify-between gap-4">
                         {/* Mobile Menu Button and Logo */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 mega-menu-container">
                             <Sheet open={isOpen} onOpenChange={setIsOpen}>
                                 <SheetTrigger asChild>
                                     <Button variant="ghost" size="icon" className="md:hidden">
@@ -170,7 +293,17 @@ export function Header() {
                                     <ShoppingCart className="h-6 w-6" />
                                     <span className="hidden sm:inline">MegaMart</span>
                                 </h1>
-                                <Menu className="h-5 w-5 hidden md:block" />
+
+                                {/* Desktop Menu Button */}
+                                <Button
+                                    variant="ghost"
+                                    className="hidden md:flex items-center gap-1 px-3 py-2"
+                                    onClick={toggleMegaMenu}
+                                    aria-expanded={isMegaMenuOpen}
+                                >
+                                    <Menu className="h-5 w-5" />
+                                    <span className="font-medium">Categories</span>
+                                </Button>
                             </div>
                         </div>
 
@@ -235,70 +368,128 @@ export function Header() {
                             </Button>
                         </div>
                     </div>
-
-                    {/* Mobile Search Bar - Appears below main header on mobile */}
-                    {/* <div className="mt-3 md:hidden">
-                        <div className="relative">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                            <Input
-                                type="search"
-                                placeholder="Search products"
-                                className="pl-10 pr-4 py-5 w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 focus:bg-white dark:focus:bg-gray-800 rounded-full"
-                            />
-                            <Button className="absolute right-1 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4 py-1 h-7 text-sm">
-                                Search
-                            </Button>
-                        </div>
-                    </div> */}
                 </div>
             </div>
 
-            {/* Navigation Menu - Hidden on mobile */}
-            {/* <div className="bg-white dark:bg-gray-900 border-b dark:border-gray-800 hidden md:block">
-                <div className="max-w-7xl mx-auto px-4">
-                    <nav className="flex items-center gap-1 overflow-x-auto py-2 hide-scrollbar">
-                        {categories.map((category) => (
-                            <DropdownMenu key={category.name}>
-                                <DropdownMenuTrigger asChild>
-                                    <Button
-                                        variant="ghost"
-                                        className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 whitespace-nowrap rounded-md"
-                                    >
-                                        <span className="text-base">{category.icon}</span>
-                                        {category.name}
-                                        {category.hasDropdown && <ChevronDown className="h-3 w-3 ml-1" />}
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent
-                                    align="start"
-                                    className="w-56 p-2 bg-white dark:bg-gray-800 border dark:border-gray-700"
-                                >
-                                    <DropdownMenuItem className="flex items-center gap-2 p-2 cursor-pointer text-gray-900 dark:text-gray-100">
-                                        <span className="text-blue-600 dark:text-blue-400">All {category.name}</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuSeparator className="bg-gray-200 dark:bg-gray-700" />
-                                    <DropdownMenuItem className="flex items-center gap-2 p-2 cursor-pointer text-gray-900 dark:text-gray-100">
-                                        <Star className="h-4 w-4 text-yellow-500" />
-                                        <span>Popular Items</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem className="flex items-center gap-2 p-2 cursor-pointer text-gray-900 dark:text-gray-100">
-                                        <Clock className="h-4 w-4 text-blue-500" />
-                                        <span>New Arrivals</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem className="flex items-center gap-2 p-2 cursor-pointer text-gray-900 dark:text-gray-100">
-                                        <Award className="h-4 w-4 text-orange-500" />
-                                        <span>Best Sellers</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem className="flex items-center gap-2 p-2 cursor-pointer text-gray-900 dark:text-gray-100">
-                                        <Shield className="h-4 w-4 text-green-500" />
-                                        <span>Quality Assured</span>
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        ))}
-                    </nav>
+            {/* Mega Menu - Appears when clicking the Categories button */}
+            {isMegaMenuOpen && (
+                <div className={`mega-menu-container hidden md:block absolute top-full left-0 w-full bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 shadow-lg z-40 transition-all duration-300 ease-in-out ${isClosing ? 'opacity-0 -translate-y-4' : 'opacity-100 translate-y-0'}`}>
+                    <div className="max-w-7xl mx-auto px-4 py-6">
+                        <div className="flex justify-between items-start mb-6">
+                            <h2 className="text-xl font-bold text-gray-900 dark:text-white">All Categories</h2>
+                            <Button variant="ghost" size="icon" onClick={closeMegaMenu} className="rounded-full">
+                                <X className="h-5 w-5" />
+                            </Button>
+                        </div>
+
+                        <div className="flex gap-8">
+                            {/* Categories List */}
+                            <div className="w-1/3">
+                                <div className="space-y-1 border-r border-gray-200 dark:border-gray-800 pr-4">
+                                    {categories.map((category) => (
+                                        <div
+                                            key={category.name}
+                                            className={`group flex items-center gap-3 p-3 rounded-md cursor-pointer transition-all duration-200 ${hoveredCategory === category.name ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                                            onMouseEnter={() => setHoveredCategory(category.name)}
+                                        >
+                                            <span className="text-xl transition-transform duration-200 group-hover:scale-110">{category.icon}</span>
+                                            <span className="font-medium transition-all duration-200 group-hover:translate-x-1">{category.name}</span>
+                                            <ChevronDown className={`h-4 w-4 ml-auto transition-transform duration-200 ${hoveredCategory === category.name ? 'rotate-180' : ''}`} />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Subcategories and Image */}
+                            <div className="w-2/3">
+                                {hoveredCategory ? (
+                                    <div className="animate-fadeIn">
+                                        <div className="flex gap-6">
+                                            <div className="w-2/3">
+                                                <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+                                                    {categories.find(c => c.name === hoveredCategory)?.name}
+                                                </h3>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    {categories.find(c => c.name === hoveredCategory)?.subcategories.map((subcategory) => (
+                                                        <Link
+                                                            key={subcategory}
+                                                            href="#"
+                                                            className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition-colors duration-200 p-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800/50"
+                                                            onClick={closeMegaMenu}
+                                                        >
+                                                            {subcategory}
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                                <div className="mt-4">
+                                                    <Link
+                                                        href="#"
+                                                        className="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium text-sm hover:underline transition-all duration-200 hover:translate-x-1"
+                                                        onClick={closeMegaMenu}
+                                                    >
+                                                        View All {hoveredCategory}
+                                                        <ChevronDown className="h-4 w-4 ml-1 rotate-90" />
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                            <div className="w-1/3">
+                                                <div className="rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg">
+                                                    <div className="bg-gray-200 dark:bg-gray-700 h-40 flex items-center justify-center">
+                                                        <span className="text-gray-500 dark:text-gray-400">
+                                                            {categories.find(c => c.name === hoveredCategory)?.name} Image
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-3 text-center">
+                                                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
+                                                        Shop Now
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400 animate-pulse">
+                                        <div className="text-center">
+                                            <LayoutGrid className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                                            <p>Hover over a category to see products</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+                            <div className="flex flex-wrap gap-6">
+                                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer">
+                                    <Star className="h-4 w-4 text-yellow-500" />
+                                    <span>Popular Items</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer">
+                                    <Clock className="h-4 w-4 text-blue-500" />
+                                    <span>New Arrivals</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer">
+                                    <Award className="h-4 w-4 text-orange-500" />
+                                    <span>Best Sellers</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer">
+                                    <Shield className="h-4 w-4 text-green-500" />
+                                    <span>Quality Assured</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div> */}
+            )}
+
+            {/* Overlay for closing mega menu when clicking outside */}
+            {/* {isMegaMenuOpen && (
+                <div
+                    className={`fixed inset-0 bg-black bg-opacity-20 z-30 transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
+                    onClick={closeMegaMenu}
+                />
+            )} */}
 
             <style jsx>{`
                 .hide-scrollbar {
@@ -307,6 +498,15 @@ export function Header() {
                 }
                 .hide-scrollbar::-webkit-scrollbar {
                     display: none;
+                }
+                
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                
+                .animate-fadeIn {
+                    animation: fadeIn 0.3s ease-in-out;
                 }
             `}</style>
         </header>
