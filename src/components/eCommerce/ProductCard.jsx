@@ -234,8 +234,8 @@ export function ProductCard({
                 )}
 
                 {/* CTA Button */}
-                <Button
-                    className="w-full mt-3 h-10 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300"
+                <Button variant="default"
+                    className="w-full mt-3 h-10  group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300"
                     onClick={handleAddToCart}
                     disabled={isOutOfStock}
                 >

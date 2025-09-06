@@ -76,7 +76,7 @@ export function ProductDealsSection({ title, products, viewAllLink = "#" }) {
                         onMouseEnter={() => setHoveredProduct(product.id)}
                         onMouseLeave={() => setHoveredProduct(null)}
                     >
-                        <ProductCard product={product} isFeatured />
+                        <ProductCard product={product} />
                     </div>
                 ))}
             </div>

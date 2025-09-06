@@ -11,7 +11,7 @@ export const laptopDeals = [
     {
         id: "7",
         name: "Dell XPS 13 (16GB | 512GB)",
-        image: "/dell-xps-13-laptop.png",
+        image: "/static/cat1.jpg",
         currentPrice: 79999,
         originalPrice: 109999,
         discount: 27,
@@ -20,7 +20,7 @@ export const laptopDeals = [
     {
         id: "8",
         name: "HP Pavilion Gaming (8GB | 512GB)",
-        image: "/hp-pavilion-gaming-laptop.png",
+        image: "/static/cat1.jpg",
         currentPrice: 54999,
         originalPrice: 74999,
         discount: 27,
@@ -29,7 +29,7 @@ export const laptopDeals = [
     {
         id: "9",
         name: "Lenovo ThinkPad E14 (8GB | 256GB)",
-        image: "/lenovo-thinkpad-e14-laptop.png",
+        image: "/static/cat1.jpg",
         currentPrice: 42999,
         originalPrice: 59999,
         discount: 28,
@@ -38,7 +38,7 @@ export const laptopDeals = [
     {
         id: "10",
         name: "ASUS ROG Strix G15 (16GB | 1TB)",
-        image: "/asus-rog-strix-g15-gaming-laptop.png",
+        image: "/static/cat1.jpg",
         currentPrice: 89999,
         originalPrice: 124999,
         discount: 28,
