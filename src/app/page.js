@@ -9,6 +9,8 @@ import Head from 'next/head'
 import React, { Fragment } from 'react'
 import { headphoneDeals, laptopDeals } from './Data'
 import FlashDealComponent from '@/Sections/FlashDeals/FlashDeals'
+import BrandsSection from '@/Sections/Brands/BrandsInfinity'
+import BrandShowcaseEnhanced from '@/Sections/Brands/BrandsInfinity'
 
 const page = () => {
   return (
@@ -20,6 +22,7 @@ const page = () => {
         <ProductDealsSection title="Laptops" products={laptopDeals} />
         <FlashDealComponent />
         <ProductDealsSection title="Smart Phones" products={laptopDeals} />
+        <BrandShowcaseEnhanced />
       </div>
       <Footer />
     </Fragment>
