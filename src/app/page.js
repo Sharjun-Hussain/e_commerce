@@ -24,7 +24,7 @@ const page = () => {
         <FlashDealComponent />
         <ProductDealsSection title="Smart Phones" products={laptopDeals} />
         <BrandShowcaseEnhanced />
-        <NewArrivalsSection />
+        {/* <NewArrivalsSection /> */}
       </div>
       <Footer />
     </Fragment>
