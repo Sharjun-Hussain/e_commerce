@@ -193,7 +193,7 @@ export function Header() {
     return (
         <header className="w-full sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm">
             {/* Promotional Top Bar - Hidden when scrolled */}
-            <div className={`hidden md:block bg-blue-50 dark:bg-blue-900/20 border-b border-blue-100 dark:border-blue-800/30 transition-all duration-300 ${isScrolled ? 'h-0 overflow-hidden opacity-0' : 'h-auto opacity-100'}`}>
+            <div className={`hidden md:block bg-blue-50 dark:bg-blue-900/20 border-b border-blue-100 dark:border-blue-800/30 transition-all duration-300 ${isScrolled ? 'max-h-0 opacity-0 overflow-hidden' : 'max-h-20 opacity-100'}`}>
                 <div className="max-w-7xl mx-auto px-4 py-2">
                     <div className="flex flex-col md:flex-row items-center justify-between text-sm text-blue-700 dark:text-blue-300">
                         <div className="flex items-center gap-1 mb-2 md:mb-0">
