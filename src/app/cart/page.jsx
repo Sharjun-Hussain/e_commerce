@@ -9,6 +9,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { useStore } from "@/States/Store"
+import { Header } from "@/Sections/Header/Header"
 
 export default function CartPage() {
     const { state, dispatch } = useStore()
@@ -34,22 +35,25 @@ export default function CartPage() {
 
     if (cart.length === 0) {
         return (
-            <div className="min-h-screen bg-background">
+            <div>
+                <Header />
+                <div className="min-h-screen bg-background ">
 
-                <div className="container mx-auto px-4 py-16">
-                    <div className="text-center max-w-md mx-auto">
-                        <div className="w-24 h-24 mx-auto mb-6 bg-muted rounded-full flex items-center justify-center">
-                            <ShoppingBag className="w-12 h-12 text-muted-foreground" />
+                    <div className="container mx-auto px-4 py-16">
+                        <div className="text-center max-w-md mx-auto">
+                            <div className="w-24 h-24 mx-auto mb-6 bg-muted rounded-full flex items-center justify-center">
+                                <ShoppingBag className="w-12 h-12 text-muted-foreground" />
+                            </div>
+                            <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
+                            <p className="text-muted-foreground mb-8">
+                                Looks like you haven't added anything to your cart yet. Start shopping to fill it up!
+                            </p>
+                            <Link href="/">
+                                <Button size="lg" className="bg-primary hover:bg-primary/90">
+                                    Continue Shopping
+                                </Button>
+                            </Link>
                         </div>
-                        <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
-                        <p className="text-muted-foreground mb-8">
-                            Looks like you haven't added anything to your cart yet. Start shopping to fill it up!
-                        </p>
-                        <Link href="/">
-                            <Button size="lg" className="bg-primary hover:bg-primary/90">
-                                Continue Shopping
-                            </Button>
-                        </Link>
                     </div>
                 </div>
             </div>
@@ -58,7 +62,6 @@ export default function CartPage() {
 
     return (
         <div className="min-h-screen bg-background">
-            <EcommerceHeader />
 
             <div className="container mx-auto px-4 py-8">
                 {/* Header */}

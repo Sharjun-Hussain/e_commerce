@@ -13,104 +13,119 @@ import Image from "next/image"
 
 const categories = [
     {
-        name: "Groceries",
-        icon: "🛒",
+        name: "Laptops",
+        icon: "💻",
         hasDropdown: true,
         subcategories: [
-            "Fruits & Vegetables",
-            "Dairy & Eggs",
-            "Bakery",
-            "Beverages",
-            "Snacks",
-            "Frozen Foods"
+            "Gaming Laptops",
+            "Business Laptops",
+            "Ultrabooks",
+            "2-in-1 Laptops",
+            "MacBooks",
+            "Student Laptops"
         ],
-        image: "/api/placeholder/300/200?text=Groceries"
+        image: "https://source.unsplash.com/300x200/?laptop,technology"
     },
     {
-        name: "Premium Fruits",
-        icon: "🍎",
+        name: "Desktops",
+        icon: "🖥️",
         hasDropdown: true,
         subcategories: [
-            "Exotic Fruits",
-            "Organic Fruits",
-            "Seasonal Fruits",
-            "Fruit Baskets",
-            "Tropical Fruits",
-            "Berries"
+            "Gaming PCs",
+            "All-in-One PCs",
+            "Business Desktops",
+            "Workstations",
+            "Mini PCs",
+            "Custom Builds"
         ],
-        image: "/api/placeholder/300/200?text=Premium+Fruits"
+        image: "https://source.unsplash.com/300x200/?desktop,computer"
     },
     {
-        name: "Home & Kitchen",
-        icon: "🏠",
+        name: "PC Components",
+        icon: "🧩",
         hasDropdown: true,
         subcategories: [
-            "Cookware",
-            "Small Appliances",
-            "Storage & Organization",
-            "Dining & Serving",
-            "Home Decor",
-            "Cleaning Supplies"
+            "Processors (CPU)",
+            "Graphics Cards (GPU)",
+            "Motherboards",
+            "RAM & Memory",
+            "Storage (HDD/SSD)",
+            "Power Supplies"
         ],
-        image: "/api/placeholder/300/200?text=Home+Kitchen"
+        image: "https://source.unsplash.com/300x200/?computer,parts"
     },
     {
-        name: "Fashion",
-        icon: "👕",
+        name: "Monitors",
+        icon: "🖼️",
         hasDropdown: true,
         subcategories: [
-            "Men's Fashion",
-            "Women's Fashion",
-            "Kids' Fashion",
-            "Accessories",
-            "Footwear",
-            "Sportswear"
+            "Gaming Monitors",
+            "Office Monitors",
+            "4K Monitors",
+            "Curved Monitors",
+            "Ultrawide Monitors",
+            "Portable Monitors"
         ],
-        image: "/api/placeholder/300/200?text=Fashion"
+        image: "https://source.unsplash.com/300x200/?monitor,screen"
     },
     {
-        name: "Electronics",
-        icon: "📱",
+        name: "Peripherals",
+        icon: "⌨️",
         hasDropdown: true,
         subcategories: [
-            "Mobile Phones",
-            "Laptops & Computers",
-            "Audio & Headphones",
-            "Cameras",
-            "Wearables",
-            "Accessories"
+            "Keyboards",
+            "Mice",
+            "Headsets",
+            "Webcams",
+            "Speakers",
+            "External Storage"
         ],
-        image: "/api/placeholder/300/200?text=Electronics"
+        image: "https://source.unsplash.com/300x200/?keyboard,mouse"
     },
     {
-        name: "Beauty",
-        icon: "💄",
+        name: "Networking",
+        icon: "🌐",
         hasDropdown: true,
         subcategories: [
-            "Skincare",
-            "Makeup",
-            "Hair Care",
-            "Fragrances",
-            "Personal Care",
-            "Men's Grooming"
+            "Routers",
+            "Wi-Fi Adapters",
+            "Modems",
+            "Network Switches",
+            "Cables",
+            "Mesh Wi-Fi Systems"
         ],
-        image: "/api/placeholder/300/200?text=Beauty"
+        image: "https://source.unsplash.com/300x200/?network,router"
     },
     {
-        name: "Home Improvement",
-        icon: "🔧",
+        name: "Printers & Scanners",
+        icon: "🖨️",
         hasDropdown: true,
         subcategories: [
-            "Tools",
-            "Lighting",
-            "Hardware",
-            "Paint & Supplies",
-            "Garden & Outdoor",
-            "Plumbing"
+            "Inkjet Printers",
+            "Laser Printers",
+            "All-in-One Printers",
+            "Photo Printers",
+            "3D Printers",
+            "Scanners"
         ],
-        image: "/api/placeholder/300/200?text=Home+Improvement"
+        image: "https://source.unsplash.com/300x200/?printer,scanner"
     },
-]
+    {
+        name: "Accessories",
+        icon: "🎧",
+        hasDropdown: true,
+        subcategories: [
+            "Laptop Bags",
+            "Cooling Pads",
+            "Docking Stations",
+            "Cables & Chargers",
+            "Adapters",
+            "USB Hubs"
+        ],
+        image: "https://source.unsplash.com/300x200/?computer,accessories"
+    }
+];
+
 
 export function Header() {
     const { theme, setTheme } = useTheme()

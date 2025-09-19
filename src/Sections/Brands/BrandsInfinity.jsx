@@ -65,7 +65,7 @@ const BrandShowcaseEnhanced = () => {
     const totalWidth = (brandWidth + gap) * brands.length;
 
     return (
-        <section className="py-16 md:py-24 bg-background  relative">
+        <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-800  relative">
             <div className="container px-4 mx-auto">
                 <div className="text-center mb-12 md:mb-16">
                     <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-foreground">
